@@ -1,0 +1,40 @@
+import unittest
+
+def findSearchTermInBooks(search_term, books):
+    """
+    Find the occurrences of the search term in a list of books.
+
+    Args:
+    - search_term (str): The term to search for.
+    - books (list): A list of strings representing book titles.
+
+    Returns:
+    - list: A list of books that contain the search term.
+    """
+    matching_books = [book for book in books if search_term in book]
+    return matching_books
+
+# Unit tests
+class TestFindSearchTermInBooks(unittest.TestCase):
+    def setUp(self):
+        # Sample list of books
+        self.books = ["A Raisin in the Sun", "If Beale Street Could Talk", "Song of Trees", "The Well"]
+
+    def test_positive_cases(self):
+        # Positive tests: Search term is found in some books
+        self.assertEqual(findSearchTermInBooks("Mockingbird", self.books), ["A Raisin in the Sun"])
+        self.assertEqual(findSearchTermInBooks("Gatsby", self.books), ["If Beale Street Could Talk"])
+        self.assertEqual(findSearchTermInBooks("in the", self.books), ["Song of Trees"])
+
+    def test_negative_cases(self):
+        # Negative tests: Search term is not found in any books
+        self.assertEqual(findSearchTermInBooks("Lorraine Hansberry", self.books), [])
+        self.assertEqual(findSearchTermInBooks("Non-Fiction", self.books), [])
+
+    def test_case_sensitive(self):
+        # Case-sensitive tests: Search term matching is case-sensitive
+        self.assertEqual(findSearchTermInBooks("the", self.books), [])  # Should not match "The" or "the"
+        self.assertEqual(findSearchTermInBooks("The", self.books), ["Song of Trees", "If Beale Street Could Talk"])
+
+if __name__ == '__main__':
+    unittest.main()
